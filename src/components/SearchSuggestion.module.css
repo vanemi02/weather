@@ -1,0 +1,11 @@
+.suggestion {
+  cursor: default;
+  border-bottom: 1px solid white;
+}
+.suggestion:hover {
+  background-color: rgb(45, 82, 73);
+}
+
+.container {
+  position: absolute;
+}
