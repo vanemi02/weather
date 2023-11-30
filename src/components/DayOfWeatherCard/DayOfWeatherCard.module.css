@@ -1,0 +1,22 @@
+.card {
+  border: 1px solid black;
+  border-radius: 1em;
+  padding: .5em;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+
+  max-width: 50em;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.datapointContainer {
+  display: flex;
+  gap: 0.5em;
+  overflow-x: auto;
+}
