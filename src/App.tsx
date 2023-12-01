@@ -31,7 +31,7 @@ function App() {
             new Date(weatherDataPoint.dt * 1000),
             {
               humidity: { value: humidity, unit: "%" },
-              pressure: { value: pressure, unit: "kPa" },
+              pressure: { value: pressure, unit: "hPa" },
               temp: { value: temp, unit: "°C" }
             }
           )
