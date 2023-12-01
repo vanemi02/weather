@@ -13,28 +13,36 @@ function App() {
   useEffect(() => {
     if (!coord) return
 
-    try {
-      fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${coord.lat}&lon=${coord.lon}&appid=${APIsecret}`)
-        .then(res => res.json())
-        .then(jsonRes => {
-          weatherApiResponse.current = jsonRes
-          const newDaysOfWeatherMap: Map<Date, weatherData>[] = []
-          let weatherMap = new Map()
-          let previousDate = new Date(weatherApiResponse.current!.list[0].dt * 1000).getDate()
-          for (const weatherDataPoint of weatherApiResponse.current!.list) {
-            const { temp, humidity, pressure } = weatherDataPoint.main
-            if (new Date(weatherDataPoint.dt * 1000).getDate() !== previousDate) {
-              previousDate = new Date(weatherDataPoint.dt * 1000).getDate()
-              newDaysOfWeatherMap.push(weatherMap)
-              weatherMap = new Map()
-            }
-            weatherMap.set(new Date(weatherDataPoint.dt * 1000), { humidity: { value: humidity, unit: "%" }, pressure: { value: pressure, unit: "kPa" }, temp: { value: temp, unit: "°C" } })
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${coord.lat}&lon=${coord.lon}&appid=${APIsecret}`)
+      .then(res => res.json())
+      .then(jsonRes => {
+        weatherApiResponse.current = jsonRes
+        const newDaysOfWeatherMap: Map<Date, weatherData>[] = []
+        let weatherMap = new Map()
+        let previousDate = new Date(weatherApiResponse.current!.list[0].dt * 1000).getDate()
+        for (const weatherDataPoint of weatherApiResponse.current!.list) {
+          const { temp, humidity, pressure } = weatherDataPoint.main
+          if (new Date(weatherDataPoint.dt * 1000).getDate() !== previousDate) {
+            previousDate = new Date(weatherDataPoint.dt * 1000).getDate()
+            newDaysOfWeatherMap.push(weatherMap)
+            weatherMap = new Map()
           }
-          setDaysOfWeatherMap(newDaysOfWeatherMap)
-        })
-    } catch (error) {
-      window.alert("could fetch data from api")
-    }
+          weatherMap.set(
+            new Date(weatherDataPoint.dt * 1000),
+            {
+              humidity: { value: humidity, unit: "%" },
+              pressure: { value: pressure, unit: "kPa" },
+              temp: { value: temp, unit: "°C" }
+            }
+          )
+        }
+        setDaysOfWeatherMap(newDaysOfWeatherMap)
+      })
+      .catch(e => {
+        console.error(e)
+        window.alert("could fetch data from api")
+      })
+
   }, [coord])
 
   return (
