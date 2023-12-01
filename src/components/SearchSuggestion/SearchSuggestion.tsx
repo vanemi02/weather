@@ -20,6 +20,6 @@ export default function SearchSuggestion<T extends {suggestion: string}>({search
   }
   
   return (<div className={css.container}>
-    {filteredObjects.map((object) => <div onClick={() => onSelection(object)} className={css.suggestion}>{object.suggestion}</div>)}
+    {filteredObjects.map((object) => <button key={object.suggestion} type='button' onClick={() => onSelection(object)} className={css.suggestion}>{object.suggestion}</button>)}
   </div>)
 }

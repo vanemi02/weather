@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import LocationSearchBar from './components/LocationSearchBar'
+import LocationSearchBar from './components/LocationSearchBar/LocationSearchBar'
 import type { weatherApiResponse, coord, weatherData } from './Types'
 import DayOfWeatherCard from './components/DayOfWeatherCard/DayOfWeatherCard'
-
-//TODO README
+import { APIsecret } from "../secret.json"
 
 function App() {
   const [coord, setCoord] = useState<coord>()
   const weatherApiResponse = useRef<weatherApiResponse>()
   const [DaysOfWeatherMap, setDaysOfWeatherMap] = useState<Map<Date, weatherData>[]>()
-  const APIsecret = "a0aac2b9d48313e5f75ccde2316be732" // TODO predelat
+  let stagger = 0
 
   useEffect(() => {
     if (!coord) return
@@ -20,15 +19,15 @@ function App() {
         weatherApiResponse.current = jsonRes
         const newDaysOfWeatherMap: Map<Date, weatherData>[] = []
         let weatherMap = new Map()
-        let previousDate = new Date(weatherApiResponse.current!.list[0].dt*1000).getDate()
+        let previousDate = new Date(weatherApiResponse.current!.list[0].dt * 1000).getDate()
         for (const weatherDataPoint of weatherApiResponse.current!.list) {
-          const {temp, humidity, pressure} =  weatherDataPoint.main
-          if (new Date(weatherDataPoint.dt*1000).getDate() !== previousDate) {
-            previousDate = new Date(weatherDataPoint.dt*1000).getDate()
+          const { temp, humidity, pressure } = weatherDataPoint.main
+          if (new Date(weatherDataPoint.dt * 1000).getDate() !== previousDate) {
+            previousDate = new Date(weatherDataPoint.dt * 1000).getDate()
             newDaysOfWeatherMap.push(weatherMap)
             weatherMap = new Map()
           }
-          weatherMap.set(new Date(weatherDataPoint.dt*1000), {humidity: {value: humidity, unit: "%"}, pressure: {value: pressure, unit: "kPa"}, temp: {value: temp, unit: "C"}})
+          weatherMap.set(new Date(weatherDataPoint.dt * 1000), { humidity: { value: humidity, unit: "%" }, pressure: { value: pressure, unit: "kPa" }, temp: { value: temp, unit: "°C" } })
         }
         setDaysOfWeatherMap(newDaysOfWeatherMap)
       })
@@ -38,7 +37,12 @@ function App() {
     <>
       <LocationSearchBar setCoord={setCoord} />
       {DaysOfWeatherMap?.length &&
-        DaysOfWeatherMap.map(weatherMap => <DayOfWeatherCard weatherMap={weatherMap} />) 
+        <ol>
+          {DaysOfWeatherMap.map((weatherMap, i) => {
+            stagger += 100
+            return <li key={weatherMap.keys().next().value + coord?.lat + coord?.lon}><DayOfWeatherCard index={i} weatherMap={weatherMap} /></li>
+          })}
+        </ol>
       }
     </>
   )
