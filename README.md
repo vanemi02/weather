@@ -11,7 +11,7 @@ Search for a city and display its weather forecast for today and the next 4 days
 - in project root run:
 ```shell
 npm i
-npm run genSecret "[your secret key for OpenWeather API]"
+npm run genSecretFile "[your secret key for OpenWeather API]"
 npm run dev
 ```
 - open the site in a browser on an outputted address and port
