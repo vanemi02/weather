@@ -8,6 +8,7 @@ Search for a city and display its weather forecast for today and the next 4 days
 ## How to run
 - install [node + npm](https://nodejs.org/en)
 - clone repository
+- register and copy your API key from [OpenWeather](https://home.openweathermap.org/)
 - in project root run:
 ```shell
 npm i
