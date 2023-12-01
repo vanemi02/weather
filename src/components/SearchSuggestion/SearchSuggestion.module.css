@@ -1,11 +1,25 @@
-.suggestion {
+.container > .suggestion {
+  display: block;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: start;
+  border-radius: 0;
+
   cursor: default;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--secondary-color);
+  padding: 0.3em;
 }
+
 .suggestion:hover {
-  background-color: rgb(45, 82, 73);
+  background-color: var(--secondary-color);
 }
 
 .container {
+  z-index: 2;
   position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--background-color);
+  width: 100%;
 }

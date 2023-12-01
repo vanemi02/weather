@@ -1,0 +1,32 @@
+.wrapper {
+  position: relative;
+  width: 30em;
+  max-width: 100%;
+  margin-top: 1em;
+}
+
+.container {
+  background-color: var(--secondary-color);
+  overflow: hidden;
+  display: grid;
+  padding-inline: 0.5em;
+  border-radius: 100vmax;
+  grid-template-columns: 1fr auto auto;
+}
+
+.textInput {
+  outline: none;
+  padding-inline: 0.6em;
+  border: none;
+  height: 100%;
+  background: none;
+  width: 100%;
+}
+
+.container > button {
+  background: none;
+  border-radius: 0;
+  outline: none;
+  border: none;
+  padding: .6em;
+}
